@@ -4,8 +4,23 @@ import Head from 'next/head';
 // 确保文件位于正确的 pages 目录下
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
+    // 检查页面加载状态
+    console.log('页面加载状态:', document.readyState);
+    // 检查路由信息
+    console.log('当前路径:', window.location.pathname);
+    
     document.body.style.opacity = '1';
   }, []);
+
+  // 添加错误边界处理
+  if (pageProps.error) {
+    return (
+      <div>
+        <h1>出错了!</h1>
+        <p>{pageProps.error.message}</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -67,6 +82,24 @@ function MyApp({ Component, pageProps }) {
     </>
   );
 }
+
+// 添加getInitialProps以处理服务端错误
+MyApp.getInitialProps = async (appContext) => {
+  const appProps = await App.getInitialProps(appContext);
+
+  // 捕获并处理404错误
+  if (appContext.ctx.res && appContext.ctx.res.statusCode === 404) {
+    return {
+      ...appProps,
+      pageProps: {
+        ...appProps.pageProps,
+        error: { message: '页面未找到' }
+      }
+    };
+  }
+
+  return appProps;
+};
 
 export default MyApp;
 
