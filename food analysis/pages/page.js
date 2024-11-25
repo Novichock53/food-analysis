@@ -53,13 +53,21 @@ export default function Home() {
       });
 
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || '请求失败');
+      }
       setResult(data.choices[0].message.content);
     } catch (error) {
-      setResult('抱歉，分析过程出现了问题，请稍后再试！');
-    } finally {
-      setLoading(false);
+      setResult('抱歉，获取建议时出现错误，请稍后重试。');
+      console.error('Error:', error);
     }
+
+    setLoading(false);
   };
+
+  if (!mounted) {
+    return null;
+  }
 
   const handleHistory = () => {
     router.push('/history');
