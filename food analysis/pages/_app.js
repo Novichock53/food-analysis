@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 
-export default function App() {
+// 将文件名改为 _app.js,这是 Next.js 的约定
+export default function App({ Component, pageProps }) {
   useEffect(() => {
     // 页面加载完成后的动画效果
     document.body.style.opacity = '1';
@@ -63,10 +64,7 @@ export default function App() {
         }
       `}</style>
 
-      <div className="container">
-        <h1>饮食分析助手</h1>
-        {/* 这里可以添加更多的内容组件 */}
-      </div>
+      <Component {...pageProps} />
     </>
   );
 }
