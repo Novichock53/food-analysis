@@ -3,8 +3,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
   const [gender, setGender] = useState('male');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
@@ -59,11 +61,24 @@ export default function Home() {
     }
   };
 
+  const handleHistory = () => {
+    router.push('/history');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#e6f3ff] via-[#f0f8ff] to-white p-5">
       <div className="max-w-[600px] mx-auto bg-white p-8 rounded-xl shadow-lg animate-fadeIn">
         <h1 className="text-center text-[#2c3e50] mb-8 animate-slideDown">饮食分析助手</h1>
         
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={handleHistory}
+            className="bg-gray-100 text-gray-600 px-4 py-2 rounded hover:bg-gray-200 transition-colors"
+          >
+            历史记录
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block mb-2">性别：</label>
@@ -134,5 +149,4 @@ export default function Home() {
     </div>
   );
 }
-
 
