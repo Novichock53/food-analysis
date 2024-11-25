@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import StyledComponentsRegistry from './registry'
+import ClientLayout from './ClientLayout'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: '饮食分析助手',
@@ -17,21 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh">
-      <head>
-        <meta charSet="UTF-8" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=PingFang+SC:wght@400;500;600&display=swap" rel="stylesheet" />
-      </head>
-      <body style={{ 
-        margin: 0,
-        fontFamily: "'PingFang SC', 'Microsoft YaHei', sans-serif",
-        WebkitFontSmoothing: 'antialiased',
-        MozOsxFontSmoothing: 'grayscale'
-      }}>
-        <StyledComponentsRegistry>
+      <body>
+        <ClientLayout>
           {children}
-        </StyledComponentsRegistry>
+        </ClientLayout>
       </body>
     </html>
   )
